@@ -13,6 +13,5 @@ else()
 endif()
 
 add_library(${PROJECT_NAME} INTERFACE IMPORTED GLOBAL)
-target_include_directories(${PROJECT_NAME}
-                           INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/include)
+target_include_directories(${PROJECT_NAME} INTERFACE include/CL include)
 target_link_libraries(${PROJECT_NAME} INTERFACE ${CUDA_OpenCL_LIBRARY})

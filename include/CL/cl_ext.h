@@ -220,15 +220,15 @@ typedef CL_API_ENTRY cl_command_queue
 ******************************************/
 
 typedef enum _cl_semaphore_type__enum {
-    CL_SEMAPHORE_TYPE_BINARY        = 1,
+    CL_SEMAPHORE_TYPE_BINARY_KHR       = 1,
 } cl_semaphore_type;
 
 typedef cl_properties cl_semaphore_properties_khr;
 
-typedef cl_uint cl_semaphore_info;
+typedef cl_uint cl_semaphore_info_khr;
 
 typedef struct _cl_semaphore* cl_semaphore_khr;
-typedef cl_ulong cl_semaphore_payload;
+typedef cl_ulong cl_semaphore_payload_khr;
 
 extern CL_API_ENTRY cl_semaphore_khr CL_API_CALL
 clCreateSemaphoreWithPropertiesKHR(cl_context context,
@@ -239,7 +239,7 @@ extern CL_API_ENTRY cl_int CL_API_CALL
 clEnqueueWaitSemaphoresKHR(cl_command_queue command_queue,
                               cl_uint num_sema_objects,
                               const cl_semaphore_khr *sema_objects,
-                              const cl_semaphore_payload *sema_payload_list,
+                              const cl_semaphore_payload_khr *sema_payload_list,
                               cl_uint num_events_in_wait_list,
                               const cl_event *event_wait_list,
                               cl_event *event) CL_API_SUFFIX__VERSION_1_2;
@@ -248,14 +248,14 @@ extern CL_API_ENTRY cl_int CL_API_CALL
 clEnqueueSignalSemaphoresKHR(cl_command_queue command_queue,
                              cl_uint num_sema_objects,
                              const cl_semaphore_khr *sema_objects,
-                             const cl_semaphore_payload *sema_payload_list,
+                             const cl_semaphore_payload_khr *sema_payload_list,
                              cl_uint num_events_in_wait_list,
                              const cl_event *event_wait_list,
                              cl_event *event) CL_API_SUFFIX__VERSION_1_2;
 
 extern CL_API_ENTRY cl_int CL_API_CALL
 clGetSemaphoreInfoKHR(const cl_semaphore_khr sema_object,
-                      cl_semaphore_info param_name,
+                      cl_semaphore_info_khr param_name,
                       size_t param_value_size,
                       void *param_value,
                       size_t *param_value_size_ret) CL_API_SUFFIX__VERSION_1_2;
@@ -269,14 +269,14 @@ clRetainSemaphoreKHR(cl_semaphore_khr sema_object) CL_API_SUFFIX__VERSION_1_2;
 extern CL_API_ENTRY cl_int CL_API_CALL
 clReleaseSemaphoreObjectKHR(cl_semaphore_khr sema_object)  CL_API_SUFFIX__VERSION_1_2;
 
-#define CL_COMMAND_SEMAPHORE_WAIT_KHR               0x2050
-#define CL_COMMAND_SEMAPHORE_SIGNAL_KHR             0x2051
-#define CL_SEMAPHORE_CONTEXT_KHR                    0x2452
-#define CL_SEMAPHORE_REFERENCE_COUNT_KHR            0x2453
-#define CL_SEMAPHORE_PROPERTIES_KHR                 0x2454
-#define CL_SEMAPHORE_TYPE_KHR                       0x2455
-#define CL_PLATFORM_SEMAPHORE_TYPES_KHR             0x2456
-#define CL_SEMAPHORE_PAYLOAD_KHR                    0x2457
+#define CL_COMMAND_SEMAPHORE_WAIT_KHR               0x2042
+#define CL_COMMAND_SEMAPHORE_SIGNAL_KHR             0x2043
+#define CL_SEMAPHORE_CONTEXT_KHR                    0x2039
+#define CL_SEMAPHORE_REFERENCE_COUNT_KHR            0x203A
+#define CL_SEMAPHORE_PROPERTIES_KHR                 0x203B
+#define CL_SEMAPHORE_TYPE_KHR                       0x203D
+#define CL_PLATFORM_SEMAPHORE_TYPES_KHR             0x2036
+#define CL_SEMAPHORE_PAYLOAD_KHR                    0x203C
 
 /******************************************
 * cl_khr_external_semaphore extension *
@@ -300,18 +300,17 @@ typedef struct _cl_semaphore_desc_khr_st {
 } cl_semaphore_desc_khr;
 
 extern CL_API_ENTRY cl_int CL_API_CALL
-clGetSemaphoreHandleForTypeKHR(
-    const cl_semaphore_khr sema_object,
-    const cl_device_id device,
-    cl_external_semaphore_handle_type_khr handleType,
-    void *handle,
-    size_t *handleSize) CL_API_SUFFIX__VERSION_1_2;
-    
+clGetSemaphoreHandleForTypeKHR(const cl_semaphore_khr                sema_object,
+                               const cl_device_id                    device,
+                               cl_external_semaphore_handle_type_khr handle_type,
+                               size_t                                handle_size,
+                               void                                  *handle_ptr,
+                               size_t                                *handle_size_ret) CL_API_SUFFIX__VERSION_1_2;
 
 #define CL_SEMAPHORE_DESC_KHR                                   0x2460
 #define CL_SEMAPHORE_EXPORT_HANDLE_TYPES_KHR                    0x203F
 
-#define CL_PLATFORM_SEMAPHORE_IMPORT_HANDLE_TYPES_KHR           0x2461
+#define CL_PLATFORM_SEMAPHORE_IMPORT_HANDLE_TYPES_KHR           0x2037
 #define CL_PLATFORM_SEMAPHORE_EXPORT_HANDLE_TYPES_KHR           0x2038
 
 #define CL_DEVICE_SEMAPHORE_IMPORT_HANDLE_TYPES_KHR                         0x204D
@@ -402,11 +401,11 @@ clCreateFromExternalSemaphoreKHR(cl_context context,
 #define CL_EXTERNAL_DEVICEGROUP_KHR                     0x2039
 #define CL_EXTERNAL_CONTEXT_TYPE_KHR                    0x204B
 #define CL_DEVICE_HANDLE_LIST_KHR                       0x2051
-#define CL_DEVICE_HANDLE_LIST_END_KHR                   0x2052
+#define CL_DEVICE_HANDLE_LIST_END_KHR                   0x0
 
 
-#define CL_COMMAND_ACQUIRE_EXTERNAL_MEM_OBJECTS_KHR     0x203A
-#define CL_COMMAND_RELEASE_EXTERNAL_MEM_OBJECTS_KHR     0x203B
+#define CL_COMMAND_ACQUIRE_EXTERNAL_MEM_OBJECTS_KHR     0x2047
+#define CL_COMMAND_RELEASE_EXTERNAL_MEM_OBJECTS_KHR     0x2048
 #define CL_EXTERNAL_MEM_DESC_KHR                        0x203C
 #define CL_EXTERNAL_IMAGE_INFO_KHR                      0x203D
 #define CL_PLATFORM_EXTERNAL_HANDLE_TYPES_KHR           0x203E
